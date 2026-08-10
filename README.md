@@ -63,6 +63,8 @@ python install.py --list     # 先看有哪些
 
 需要**专属定制**的智能体？可以把需求发到我邮箱或评论区，支持按你的课题、行业、业务定制。本项目会持续更新更多智能体。
 
+> **其他领域智能体**：⚗️ [AI4Chem 化学](https://github.com/qgeng1465/ai4chem-agents) · 🔬 [AI4科研 科研日常](https://github.com/qgeng1465/ai4research-agents) · 🌱 [日常生活](https://github.com/qgeng1465/daily-agents)
+
 ## ⚠️ 免责声明
 
 本仓库提供的智能体**仅用于学习研究及个人合理使用**。
