@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI4Bio 智能体 · 生物信息学专业</title>
+<meta name="description" content="10 个开箱即用的生物信息学 AI 智能体：文献、序列、结构、测序、富集、设计与分析。">
+<style>
+  :root{--bg:#0f1117;--card:#1a1d27;--border:#2a2e3d;--fg:#e8eaf0;--muted:#9aa1b5;--accent:#7c5cff;--accent2:#00d4a8}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--fg);line-height:1.6}
+  .wrap{max-width:980px;margin:0 auto;padding:32px 20px 60px}
+  header{text-align:center;padding:24px 0 8px}
+  h1{font-size:28px;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--muted);margin-top:10px;font-size:15px}
+  .count{display:inline-block;margin-top:14px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-size:13px;color:var(--muted)}
+  .install{margin:24px auto;max-width:680px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-align:left}
+  .install code{display:block;background:#0c0e14;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;color:#c8d3ff;word-break:break-all;white-space:pre-wrap;margin-bottom:12px}
+  .btn{display:inline-block;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer;margin-right:8px}
+  .btn:hover{filter:brightness(1.1)}
+  .btn.ghost{background:transparent;border:1px solid var(--border);color:var(--fg)}
+  h2{font-size:19px;margin:30px 0 6px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:14px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;transition:transform .12s,border-color .12s}
+  .card:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .card .name{font-size:15px;font-weight:600;color:var(--accent2)}
+  .card .name::before{content:"@";color:var(--accent);margin-right:1px}
+  .card .desc{font-size:13px;color:var(--muted);margin-top:6px}
+  .copy{display:inline-block;margin-top:10px;font-size:12px;color:var(--accent);cursor:pointer;background:none;border:none;padding:0;text-decoration:underline}
+  .copy:hover{color:var(--accent2)}
+  footer{text-align:center;color:var(--muted);font-size:13px;margin-top:40px;border-top:1px solid var(--border);padding-top:22px}
+  .donate{margin:20px auto;text-align:center}
+  .donate img{width:170px;border-radius:10px;border:1px solid var(--border)}
+  .donate p{color:var(--muted);font-size:13px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🧬 AI4Bio 智能体 · 生物信息学专业</h1>
+    <div class="sub">10 个开箱即用的生物信息学 AI 智能体：文献、序列、结构、测序、富集、设计与分析。</div>
+    <div class="count">10 个智能体 · 即装即用</div>
+  </header>
+
+  <div class="install">
+    <code>git clone https://github.com/qgeng1465/ai4bio-agents.git
+cd ai4bio-agents
+python install.py</code>
+    <button class="btn" onclick="copyCmd('git clone https://github.com/qgeng1465/ai4bio-agents.git && cd ai4bio-agents && python install.py')">复制安装命令</button>
+    <button class="btn ghost" onclick="copyCmd('python install.py --list')">复制查看命令</button>
+  </div>
+
+  <h2>📦 智能体列表</h2>
+  <div class="grid" id="list"></div>
+
+  <footer>
+    <div class="donate">
+      <img src="assets/donate.png" alt="赞赏码">
+      <p>如果这些智能体帮到了你，欢迎扫码赞赏支持～</p>
+    </div>
+    <div>MIT Licensed · © 2026 qgeng1465 · 仅供学习研究与个人合理使用</div>
+  </footer>
+</div>
+<script>
+  const AGENTS = [["antibody-analysis","抗体序列分析：解析重/轻链，识别框架区与 CDR（IMGT 风格编号）、评估人源化程度与特异性线索。用法：给我抗体序列。"],["blast-search","对 DNA 或蛋白序列做 NCBI BLAST 同源搜索，返回 top hits（accession/物种/E值/一致性/描述）。用法：粘贴一段序列或序列文件路径。"],["crispr-design","sgRNA 设计：在靶序列上扫描 PAM(NGG)、提取 20bp spacer、评估 GC/脱靶并输出候选表。用法：给我靶基因序列或基因名。"],["fastq-qc","测序数据质控：分析 FASTQ 文件（reads 数、长度、碱基质量、GC 含量、接头污染），给出过滤建议。用法：给我 FASTQ 文件路径。"],["go-kegg-enrichment","基因功能富集分析：用 g:Profiler 对基因列表做 GO / KEGG / 通路富集，输出显著项表格与生物学解读。用法：给我基因符号/ID 列表。"],["ncbi-genbank-download","从 NCBI 下载基因/蛋白序列（GenBank、FASTA、gene、protein、nucleotide 等数据库），支持 accession 号、gene symbol 或关键词。用法：给我基因名或序列号。"],["phylogeny-tree","构建系统发育树：比对同源序列（MAFFT）→ 建树（邻接法/IQ-TREE）→ 输出 Newick 并解读。用法：给我物种列表或序列文件。"],["protein-structure-pdb","蛋白质结构分析：按 PDB ID 拉取结构并总结分辨率、链/残基、配体、功能位点、相关文献；也可分析本地 PDB 文件。用法：给我 PDB ID。"],["pubmed-research","检索 PubMed 文献并结构化总结研究主题（标题/作者/期刊/方法/结论/DOI），适合写综述、开题、课题调研。用法：告诉我要检索的主题。"],["sequence-analysis","本地序列分析：GC 含量、ORF 查找、翻译、反向互补、长度统计。支持 DNA/RNA/蛋白序列或 FASTA 文件。用法：粘贴序列或给出文件路径。"]];
+  const box = document.getElementById("list");
+  box.innerHTML = AGENTS.map(([n,d]) =>
+    `<div class="card">
+      <div class="name">${n}</div>
+      <div class="desc">${d}</div>
+      <button class="copy" onclick="copyName('${n}')">复制 @${n}</button>
+    </div>`).join("");
+  function copyName(n){
+    navigator.clipboard.writeText("@" + n).then(()=>toast("已复制 @"+n+" ✓"));
+  }
+  function copyCmd(c){
+    navigator.clipboard.writeText(c).then(()=>toast("已复制安装命令 ✓"));
+  }
+  function toast(msg){
+    const t = document.createElement("div");
+    t.style.cssText = "position:fixed;left:50%;bottom:36px;transform:translateX(-50%);background:#1a1d27;border:1px solid var(--accent);color:var(--fg);padding:10px 18px;border-radius:10px;font-size:13px;z-index:99;box-shadow:0 4px 20px rgba(0,0,0,.4)";
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(()=>t.remove(), 1600);
+  }
+</script>
+</body>
+</html>
